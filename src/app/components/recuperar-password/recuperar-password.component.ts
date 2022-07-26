@@ -13,6 +13,7 @@ import { FirebaseCodeErrorsService } from 'src/app/services/firebase-code-errors
 export class RecuperarPasswordComponent implements OnInit {
 
   recuperPassword: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -33,10 +34,14 @@ export class RecuperarPasswordComponent implements OnInit {
 
     const correo = this.recuperPassword.value.correo;
 
+    this.loading = true;
+
     this.authService.sendPasswordResetEmail(correo).then(() => {
       this.toastr.success('Se ha enviado un correo para restablecer la contraseña', 'Correo enviado');
       this.router.navigate(['/login']);
-    } ).catch(error => {
+    })
+    .catch(error => {
+      this.loading = false;
       this.toastr.error(this._serviceFCError.firebaseCodeError(error.code), 'Error');
     })
 
