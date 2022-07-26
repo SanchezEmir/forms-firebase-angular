@@ -5,20 +5,32 @@
     <form [formGroup]="registrarUsuario" (ngSubmit)="registrar()">
       <div class="form-floating mb-3">
         <input type="email" class="form-control" formControlName="email" placeholder="name@example.com">
-        <label >Email address</label>
+        <label >Correo Electronico</label>
+        <span *ngIf="registrarUsuario.get('email')?.hasError('required') && registrarUsuario.get('email')?.touched" class="text-danger errorLabel">
+          El <strong>Correo Electronico</strong> es requerido.
+        </span>
+        <span *ngIf="registrarUsuario.get('email')?.hasError('email') && registrarUsuario.get('email')?.touched" class="text-danger errorLabel">
+          El <strong>Correo Electronico</strong> es invalido.
+        </span>
       </div>
       <div class="form-floating mb-3">
         <input type="password" class="form-control" formControlName="password" placeholder="Password">
         <label >Password</label>
+        <span *ngIf="registrarUsuario.get('password')?.hasError('required') && registrarUsuario.get('password')?.touched" class="text-danger errorLabel">
+          El <strong>password</strong> es requerido.
+        </span>
+        <span *ngIf="registrarUsuario.get('password')?.hasError('minlength') && registrarUsuario.get('password')?.touched" class="text-danger errorLabel">
+          El <strong>password</strong> debe ser como mínimo 6 carácteres.
+        </span>
       </div>
       <div class="form-floating mb-3">
         <input type="password" class="form-control" formControlName="repetirPassword" placeholder="Repetir Password">
         <label > Repetir Contraseña</label>
       </div>
       <div class="d-grid gap-2 mb-3">
-        <button class="btn btn-primary btn-lg" type="submit">Aceptar</button>
+        <button class="btn btn-primary btn-lg"  type="submit">Aceptar</button>
       </div>
-      <a routerLink="/login">Volver</a>
+      <a  routerLink="/login">Volver</a>
     </form>
   </div>
   <app-spinner *ngIf="loading"></app-spinner>

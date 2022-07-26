@@ -25,8 +25,8 @@ export class RegistrarUsuarioComponent implements OnInit {
     this.registrarUsuario = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      repetirPassword: ['', [Validators.required, Validators.minLength(6)]],
-    })
+      repetirPassword: ['', [Validators.required, Validators.minLength(6)]]
+    });
    }
 
   ngOnInit(): void {
@@ -36,6 +36,7 @@ export class RegistrarUsuarioComponent implements OnInit {
     const email = this.registrarUsuario.value.email;
     const password = this.registrarUsuario.value.password;
     const repetirPassword = this.registrarUsuario.value.repetirPassword;
+
 
     if(password !== repetirPassword){
       this.toastr.error('Las contraseñas no coinciden', 'Error');
@@ -55,9 +56,15 @@ export class RegistrarUsuarioComponent implements OnInit {
       this.toastr.error(this._serviceFCError.firebaseCodeError(err.code), 'Error');
     })
 
-    console.log(email, password, repetirPassword);
+    console.log(email, password);
     console.log(this.registrarUsuario);
     console.log(this.registrarUsuario.value);
   }
+
+  // checkPassword(group: FormGroup): any {
+  //   const pass = group.controls.password?.value;
+  //   const confirmPassword = group.controls.repetirPassword?.value;
+  //   return pass === confirmPassword ? null : { notSame: true }
+  // }
 
 }
