@@ -27,18 +27,17 @@ export class DashboardComponent implements OnInit {
       if(user){
         if(user.emailVerified){
           this.dataUser = user;
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/pages/inicio']);
         }
       } else {
         this.toastr.warning('Por favor, inicia sesión.', 'Alerta');
         this.router.navigate(['/login']);
-        // this.authService.signOut();
       }
     });
   }
 
   logOut() {
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
     this.authService.signOut().then(() => {
       this.router.navigate(['/login']);
     } ).catch(err => {

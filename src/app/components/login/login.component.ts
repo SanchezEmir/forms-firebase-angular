@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.authService.signInWithEmailAndPassword(email, password).then((user) => {
       console.log(user);
       if(user.user?.emailVerified){
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/pages/inicio']);
       } else {
         this.toastr.warning('Por favor, verifique su correo electrónico', 'Alerta');
         this.router.navigate(['/verificar-correo']);
