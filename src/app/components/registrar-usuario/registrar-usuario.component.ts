@@ -46,9 +46,10 @@ export class RegistrarUsuarioComponent implements OnInit {
     this.loading = true;
 
     this.authService.createUserWithEmailAndPassword(email, password).then((user) => {
-      this.loading = false;
-      this.toastr.success('Usuario registrado correctamente', 'Éxito');
-      this.router.navigate(['/login']);
+      // this.loading = false;
+      // this.toastr.success('Usuario registrado correctamente', 'Éxito');
+      // this.router.navigate(['/login']);
+      this.verificarCorreo();
       console.log(user);
     }).catch(err => {
       this.loading = false;
@@ -66,5 +67,17 @@ export class RegistrarUsuarioComponent implements OnInit {
   //   const confirmPassword = group.controls.repetirPassword?.value;
   //   return pass === confirmPassword ? null : { notSame: true }
   // }
+
+  verificarCorreo(){
+    this.authService.currentUser.then(user => {
+      user?.sendEmailVerification().then(() => {
+        this.toastr.info('Por favor, verifique su correo electrónico', 'Info');
+        this.router.navigate(['/login']);
+      }).catch(err => {
+        console.log(err);
+        this.toastr.error(this._serviceFCError.firebaseCodeError(err.code), 'Error');
+      })
+    });
+  }
 
 }
